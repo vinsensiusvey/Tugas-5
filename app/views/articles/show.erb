@@ -1,0 +1,45 @@
+<%= link_to "Export to XLSX", export_path(@article, :format => "xlsx"), :class => "btn btn-primary" %>
+<h1><%= @article.title %></h1>
+<small><%= @article.comments.length %> comment(s) | <%= link_to 'Edit', edit_article_path(@article) %> | <%= link_to 'Delete', article_path(@article), :method => :delete, :data => {confirm: "Are you sure want to delete?"} %></small>
+<div><%= @article.content.html_safe %></div>
+<hr>
+<h2>Comments</h2>
+<% if @article.comments.length == 0 %>
+    There is no comment.
+<% else %>
+    <% @article.comments.each do |comment| %>
+        <h4><%= comment.title %></h4>
+        <div class="comment">
+            <%= comment.content %><br><br>
+        </div>
+    <% end %>
+<% end %>
+
+<% if @article.errors.any? %>
+    <div class="alert alert-danger">
+        <ul>
+            <% @article.errors.full_message.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+        </ul>
+    </div>
+<% end %>
+<br><br>
+<div class="row">
+    <div class="col-lg-5">
+        <%= form_for @comment do |f| %>
+            <div class="form-group">
+                <%= f.label :title %>
+                <%= f.text_field :title, :class => "form-control" %>
+            </div>
+            <div class="form-group">
+                <%= f.label :content %>
+                <%= f.text_area :content, :class => "form-control", :rows => 8 %>
+            </div>
+            <%= f.hidden_field :article_id, :value => @article.id %>
+            <div class="form-group">
+                <%= f.submit "Submit", :class => "btn btn-primary" %>
+            </div>
+        <% end %>
+    </div>
+</div>

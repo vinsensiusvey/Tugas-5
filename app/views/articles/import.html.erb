@@ -1,0 +1,6 @@
+<h2>Import Articles</h2>
+
+<%= form_tag article_import_xlsx_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import", :class => "btn btn-default" %>
+<% end %>

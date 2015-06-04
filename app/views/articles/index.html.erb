@@ -1,0 +1,13 @@
+<% if @articles.length == 0 %>
+    <h2>No data found.</h2>
+<% else %>
+    <%= link_to "Import from XLSX", article_import_path, :class => "btn btn-primary" %>
+    <% @articles.each do |article| %>
+        <% if article %>
+            <h2><%= link_to article.title, article_path(article) %></h2>
+            <small><%= article.comments.length %> comment(s)</small>
+            <div><%= article.content.html_safe %></div>
+            <hr>
+        <% end %>
+    <% end %>
+<% end %>
